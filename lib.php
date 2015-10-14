@@ -429,18 +429,23 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
     public function load_page_components() {
         global $CFG, $PAGE;
 
-        $jsurl = new moodle_url($CFG->wwwroot.'/plagiarism/turnitin/jquery/jquery-1.8.2.min.js');
+        $PAGE->requires->jquery();
+
+        $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo.js');
         $PAGE->requires->js($jsurl);
-        $jsurl = new moodle_url($CFG->wwwroot.'/mod/turnitintooltwo/jquery/turnitintooltwo.js');
+        $jsurl = new moodle_url('/plagiarism/turnitin/jquery/turnitin_module.js');
         $PAGE->requires->js($jsurl);
-        $jsurl = new moodle_url($CFG->wwwroot.'/plagiarism/turnitin/jquery/turnitin_module.js');
+        $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.colorbox.js');
         $PAGE->requires->js($jsurl);
-        $jsurl = new moodle_url($CFG->wwwroot.'/mod/turnitintooltwo/jquery/jquery.colorbox.js');
-        $PAGE->requires->js($jsurl);
-        $jsurl = new moodle_url($CFG->wwwroot.'/mod/turnitintooltwo/jquery/jquery.tooltipster.js');
+        $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/jquery.tooltipster.js');
         $PAGE->requires->js($jsurl);
 
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
+
+        $cssurl = new moodle_url('/plagiarism/turnitin/css/font-awesome.min.css');
+        $PAGE->requires->css($cssurl);
+        $cssurl = new moodle_url('/plagiarism/turnitin/css/tii-icon-webfont.css');
+        $PAGE->requires->css($cssurl);
     }
 
     /**
@@ -482,10 +487,6 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
      */
     public function get_links($linkarray) {
         global $CFG, $DB, $OUTPUT, $PAGE, $USER;
-
-        // Required for font icons.
-        require_once(__DIR__.'/font-awesome.php');
-        require_once(__DIR__.'/tii-icon-webfont.php');
 
         // Don't show links for certain file types as they won't have been submitted to Turnitin.
         if (!empty($linkarray["file"])) {
