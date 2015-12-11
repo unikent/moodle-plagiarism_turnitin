@@ -350,8 +350,6 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
         }
 
         // Required for font icons.
-        require_once(__DIR__.'/font-awesome.php');
-        require_once(__DIR__.'/tii-icon-webfont.php');
         $this->load_page_components();
 
         // Show agreement.
@@ -428,12 +426,6 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
     public function load_page_components() {
         global $CFG, $PAGE;
 
-        if ($PAGE->requires->is_head_done()) {
-            return;
-        }
-
-        $PAGE->requires->jquery();
-
         $jsurl = new moodle_url('/mod/turnitintooltwo/jquery/turnitintooltwo.js');
         $PAGE->requires->js($jsurl);
         $jsurl = new moodle_url('/plagiarism/turnitin/jquery/turnitin_module.js');
@@ -445,10 +437,12 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
 
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
 
-        $cssurl = new moodle_url('/plagiarism/turnitin/css/font-awesome.min.css');
-        $PAGE->requires->css($cssurl);
-        $cssurl = new moodle_url('/plagiarism/turnitin/css/tii-icon-webfont.css');
-        $PAGE->requires->css($cssurl);
+        if (!$PAGE->requires->is_head_done()) {
+            $cssurl = new moodle_url('/plagiarism/turnitin/css/font-awesome.min.css');
+            $PAGE->requires->css($cssurl);
+            $cssurl = new moodle_url('/plagiarism/turnitin/css/tii-icon-webfont.css');
+            $PAGE->requires->css($cssurl);
+        }
     }
 
     /**
