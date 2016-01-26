@@ -455,6 +455,7 @@ class plagiarism_plugin_turnitin extends plagiarism_plugin {
         $PAGE->requires->js($jsurl);
 
         $PAGE->requires->string_for_js('closebutton', 'turnitintooltwo');
+	$PAGE->requires->string_for_js('loadingdv', 'turnitintooltwo');
 
         if (!$PAGE->requires->is_head_done()) {
             $cssurl = new moodle_url('/plagiarism/turnitin/css/tii-icon-webfont.css');
