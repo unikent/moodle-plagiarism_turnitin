@@ -157,25 +157,19 @@ function xmldb_plagiarism_turnitin_upgrade($oldversion) {
         upgrade_dm_successful_uploads();
     }
 
-    if ($oldversion < 2015040107) {
+    if ($oldversion < 2016011102) {
         $table = new xmldb_table('plagiarism_turnitin_files');
         $field = new xmldb_field('submitter', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, null, 'userid');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
-        upgrade_plugin_savepoint(true, 2015040107, 'plagiarism', 'turnitin');
-    }
 
-    if ($oldversion < 2015040110) {
         $table = new xmldb_table('plagiarism_turnitin_files');
         $field = new xmldb_field('student_read', XMLDB_TYPE_INTEGER, '10', XMLDB_UNSIGNED, null, null, null, 'errormsg');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
-        upgrade_plugin_savepoint(true, 2015040110, 'plagiarism', 'turnitin');
-    }
-
-    if ($oldversion < 2016011101) {
+        
         $table = new xmldb_table('plagiarism_turnitin_files');
         $field = new xmldb_field('gm_feedback', XMLDB_TYPE_INTEGER, '1', XMLDB_UNSIGNED, true, false, 0, 'student_read');
         if (!$dbman->field_exists($table, $field)) {
